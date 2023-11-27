@@ -1,4 +1,3 @@
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -8,10 +7,87 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User{
-  id       Int      @id @default(autoincrement())
-  name     String
-  jobTitle String
+model User {
+  id             Int      @id @default(autoincrement())
+  name           String
+  phone          BigInt
+  email          String?  @unique
+  password       String
+  education_name String   @unique
+  added_time     DateTime
+  monthly        BigInt
+  montly_price   BigInt
+  group_id       BigInt
+  mentor_id      BigInt
+  cours_id       BigInt
+  is_enabled     Boolean  @default(false)
+  verified       Boolean @default(false)
+}
 
+model Requests {
+  id             Int    @id @default(autoincrement())
+  education_name String @unique
+  login          String @unique
+  password       String
+  phone          BigInt
+  user_name      String
+  email          String @unique
+  added          BigInt
+}
 
+model Status {
+  id           Int      @id @default(autoincrement())
+  write        BigInt
+  add_admin    BigInt
+  group_id     BigInt
+  mentor_id    BigInt
+  time         DateTime
+  education_id BigInt
+}
+
+model Educations {
+  id       Int    @id @default(autoincrement())
+  name     String @unique
+  login    String @unique
+  password String
+}
+
+model Lesson_lists {
+  id           Int      @id @default(autoincrement())
+  name         String
+  file         String
+  day          DateTime
+  group_id     BigInt
+  education_id BigInt
+}
+
+model Courses {
+  id           Int    @id @default(autoincrement())
+  name         String
+  education_id BigInt
+}
+
+model Groups {
+  id            Int      @id @default(autoincrement())
+  group_name    String
+  school_days   String
+  time          DateTime
+  student_count BigInt
+  mentor_id     BigInt
+  cours_id      BigInt
+}
+
+model Attendance {
+  id           Int      @id @default(autoincrement())
+  user_name    String
+  day          DateTime
+  groupId      BigInt
+  education_id BigInt
+}
+
+enum Role {
+  student
+  mentor_id
+  admin
+  big_admin
 }
